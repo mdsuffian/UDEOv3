@@ -1,0 +1,237 @@
+{
+  "rules": [
+    {
+      "ruleId": "csharp-naming-conventions",
+      "name": "C# Naming Conventions",
+      "description": "Standard naming conventions for C# code",
+      "domain": "programming",
+      "category": "coding-standards",
+      "version": "2.0.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "medium",
+      "conditions": [
+        {
+          "field": "language",
+          "operator": "equals",
+          "value": "csharp"
+        }
+      ],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "naming",
+            "rules": [
+              {
+                "type": "class",
+                "style": "PascalCase",
+                "description": "Class names should use PascalCase"
+              },
+              {
+                "type": "method",
+                "style": "PascalCase",
+                "description": "Method names should use PascalCase"
+              },
+              {
+                "type": "property",
+                "style": "PascalCase",
+                "description": "Property names should use PascalCase"
+              },
+              {
+                "type": "field",
+                "style": "camelCase",
+                "prefix": "_",
+                "description": "Private fields should use camelCase with underscore prefix"
+              },
+              {
+                "type": "local",
+                "style": "camelCase",
+                "description": "Local variables should use camelCase"
+              },
+              {
+                "type": "constant",
+                "style": "PascalCase",
+                "description": "Constants should use PascalCase"
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "standard",
+          "title": "Microsoft C# Coding Conventions",
+          "location": "https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions"
+        }
+      ],
+      "tags": ["csharp", "naming", "conventions"]
+    },
+    {
+      "ruleId": "csharp-access-modifiers",
+      "name": "C# Access Modifiers",
+      "description": "Guidelines for using access modifiers in C#",
+      "domain": "programming",
+      "category": "coding-standards",
+      "version": "2.0.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "medium",
+      "conditions": [
+        {
+          "field": "language",
+          "operator": "equals",
+          "value": "csharp"
+        }
+      ],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "access-modifiers",
+            "rules": [
+              {
+                "type": "class",
+                "default": "internal",
+                "description": "Classes should be internal by default"
+              },
+              {
+                "type": "interface",
+                "default": "public",
+                "description": "Interfaces should be public by default"
+              },
+              {
+                "type": "method",
+                "default": "private",
+                "description": "Methods should be private by default"
+              },
+              {
+                "type": "field",
+                "default": "private",
+                "description": "Fields should be private by default"
+              },
+              {
+                "type": "property",
+                "default": "public",
+                "description": "Properties can be public if part of the class interface"
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "standard",
+          "title": "Framework Design Guidelines",
+          "location": "https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/"
+        }
+      ],
+      "tags": ["csharp", "access-modifiers", "encapsulation"]
+    },
+    {
+      "ruleId": "csharp-exception-handling",
+      "name": "C# Exception Handling",
+      "description": "Best practices for exception handling in C#",
+      "domain": "programming",
+      "category": "best-practices",
+      "version": "2.0.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "high",
+      "conditions": [
+        {
+          "field": "language",
+          "operator": "equals",
+          "value": "csharp"
+        }
+      ],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "exception-handling",
+            "rules": [
+              {
+                "type": "catch-specific",
+                "description": "Catch specific exceptions before generic Exception"
+              },
+              {
+                "type": "avoid-empty-catch",
+                "description": "Avoid empty catch blocks"
+              },
+              {
+                "type": "use-finally",
+                "description": "Use finally blocks for cleanup"
+              },
+              {
+                "type": "custom-exceptions",
+                "description": "Create custom exceptions for domain-specific errors"
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "standard",
+          "title": "Exception Handling Best Practices",
+          "location": "https://docs.microsoft.com/en-us/dotnet/standard/exceptions/"
+        }
+      ],
+      "tags": ["csharp", "exceptions", "error-handling"]
+    },
+    {
+      "ruleId": "csharp-null-handling",
+      "name": "C# Null Handling",
+      "description": "Best practices for handling null values in C#",
+      "domain": "programming",
+      "category": "best-practices",
+      "version": "2.0.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "high",
+      "conditions": [
+        {
+          "field": "language",
+          "operator": "equals",
+          "value": "csharp"
+        }
+      ],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "null-handling",
+            "rules": [
+              {
+                "type": "nullable-reference-types",
+                "enabled": true,
+                "description": "Enable nullable reference types"
+              },
+              {
+                "type": "null-conditional-operator",
+                "description": "Use null-conditional operator (?.) for member access"
+              },
+              {
+                "type": "null-coalescing-operator",
+                "description": "Use null-coalescing operator (??) for default values"
+              },
+              {
+                "type": "avoid-null-return",
+                "description": "Avoid returning null from methods"
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "standard",
+          "title": "Nullable Reference Types",
+          "location": "https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references"
+        }
+      ],
+      "tags": ["csharp", "null", "nullable-reference-types"]
+    }
+  ]
+}

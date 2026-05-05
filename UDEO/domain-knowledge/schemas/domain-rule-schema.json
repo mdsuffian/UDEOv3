@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Domain Rule Schema",
+  "description": "Schema for domain-specific rules and regulations",
+  "type": "object",
+  "properties": {
+    "ruleId": {
+      "type": "string",
+      "description": "Unique identifier for the rule",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the rule"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the rule"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Domain this rule belongs to",
+      "enum": ["financial", "medical", "programming"]
+    },
+    "category": {
+      "type": "string",
+      "description": "Category within the domain"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the rule",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "effectiveDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the rule becomes effective"
+    },
+    "expiryDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the rule expires (optional)"
+    },
+    "priority": {
+      "type": "string",
+      "description": "Priority level of the rule",
+      "enum": ["low", "medium", "high", "critical"],
+      "default": "medium"
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Conditions that must be met for the rule to apply",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "Field to check"
+          },
+          "operator": {
+            "type": "string",
+            "enum": ["equals", "not_equals", "greater_than", "less_than", "contains", "matches", "in", "not_in"]
+          },
+          "value": {
+            "description": "Value to compare against"
+          }
+        },
+        "required": ["field", "operator", "value"]
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "Actions to take when the rule is triggered",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["validate", "transform", "notify", "block", "warn"]
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Parameters for the action"
+          }
+        },
+        "required": ["type"]
+      }
+    },
+    "references": {
+      "type": "array",
+      "description": "References to external documents or sources",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["url", "document", "regulation", "standard"]
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the reference"
+          },
+          "location": {
+            "type": "string",
+            "description": "URL or path to the reference"
+          }
+        },
+        "required": ["type", "title", "location"]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags for categorizing and searching rules",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["ruleId", "name", "description", "domain", "version", "conditions", "actions"],
+  "additionalProperties": false
+}

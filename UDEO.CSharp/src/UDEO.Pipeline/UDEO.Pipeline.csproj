@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>UDEO.Pipeline</RootNamespace>
+    <AssemblyName>UDEO.Pipeline</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UDEO.Core\UDEO.Core.csproj" />
+    <ProjectReference Include="..\UDEO.Experts\UDEO.Experts.csproj" />
+  </ItemGroup>
+</Project>

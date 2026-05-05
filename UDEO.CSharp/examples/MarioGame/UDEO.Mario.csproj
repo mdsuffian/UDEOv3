@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>UDEO.Mario</RootNamespace>
+    <AssemblyName>UDEO.Mario</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UDEO.Core\UDEO.Core.csproj" />
+    <ProjectReference Include="..\UDEO.Experts\UDEO.Experts.csproj" />
+    <ProjectReference Include="..\UDEO.Pipeline\UDEO.Pipeline.csproj" />
+    <ProjectReference Include="..\UDEO.Store\UDEO.Store.csproj" />
+    <ProjectReference Include="..\UDEO.Native\UDEO.Native.csproj" />
+  </ItemGroup>
+</Project>

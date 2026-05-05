@@ -1,0 +1,40 @@
+{
+  "ruleId": "example-rule-001",
+  "name": "Example Domain Rule",
+  "description": "This is a template for creating domain-specific rules. Replace this content with your actual rule description.",
+  "domain": "financial",
+  "category": "lending",
+  "version": "2.0.0",
+  "effectiveDate": "2023-01-01",
+  "expiryDate": null,
+  "priority": "medium",
+  "conditions": [
+    {
+      "field": "exampleField",
+      "operator": "greater_than",
+      "value": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "validate",
+      "parameters": {
+        "validationType": "range",
+        "min": 0,
+        "max": 100
+      }
+    }
+  ],
+  "references": [
+    {
+      "type": "url",
+      "title": "Reference Document",
+      "location": "https://example.com/reference"
+    }
+  ],
+  "tags": [
+    "example",
+    "template",
+    "domain-rule"
+  ]
+}

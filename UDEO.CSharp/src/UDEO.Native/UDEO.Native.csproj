@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>UDEO.Native</RootNamespace>
+    <AssemblyName>UDEO.Native</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Physics\PhysicsEngine.cpp" />
+    <None Include="Physics\PhysicsEngine.h" />
+    <None Include="Physics\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

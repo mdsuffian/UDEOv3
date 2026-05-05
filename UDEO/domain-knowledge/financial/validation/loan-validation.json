@@ -1,0 +1,248 @@
+{
+  "validationId": "loan-application-validation",
+  "name": "Loan Application Validation",
+  "description": "Comprehensive validation logic for loan applications",
+  "domain": "financial",
+  "targetType": "loan-application",
+  "version": "2.0.0",
+  "severity": "error",
+  "validationRules": [
+    {
+      "ruleId": "applicant-name-required",
+      "fieldName": "applicant.name",
+      "ruleType": "required",
+      "errorMessage": "Applicant name is required"
+    },
+    {
+      "ruleId": "applicant-ssn-required",
+      "fieldName": "applicant.ssn",
+      "ruleType": "required",
+      "errorMessage": "Applicant SSN is required"
+    },
+    {
+      "ruleId": "applicant-ssn-format",
+      "fieldName": "applicant.ssn",
+      "ruleType": "pattern",
+      "parameters": {
+        "pattern": "^\\d{3}-\\d{2}-\\d{4}$"
+      },
+      "errorMessage": "SSN must be in format XXX-XX-XXXX"
+    },
+    {
+      "ruleId": "loan-amount-required",
+      "fieldName": "loan.amount",
+      "ruleType": "required",
+      "errorMessage": "Loan amount is required"
+    },
+    {
+      "ruleId": "loan-amount-type",
+      "fieldName": "loan.amount",
+      "ruleType": "type",
+      "parameters": {
+        "type": "number"
+      },
+      "errorMessage": "Loan amount must be a number"
+    },
+    {
+      "ruleId": "loan-amount-range",
+      "fieldName": "loan.amount",
+      "ruleType": "range",
+      "parameters": {
+        "min": 1000,
+        "max": 5000000
+      },
+      "errorMessage": "Loan amount must be between $1,000 and $5,000,000"
+    },
+    {
+      "ruleId": "property-value-required",
+      "fieldName": "property.value",
+      "ruleType": "required",
+      "errorMessage": "Property value is required"
+    },
+    {
+      "ruleId": "property-value-type",
+      "fieldName": "property.value",
+      "ruleType": "type",
+      "parameters": {
+        "type": "number"
+      },
+      "errorMessage": "Property value must be a number"
+    },
+    {
+      "ruleId": "property-value-positive",
+      "fieldName": "property.value",
+      "ruleType": "range",
+      "parameters": {
+        "min": 1
+      },
+      "errorMessage": "Property value must be greater than 0"
+    },
+    {
+      "ruleId": "income-required",
+      "fieldName": "income.monthly",
+      "ruleType": "required",
+      "errorMessage": "Monthly income is required"
+    },
+    {
+      "ruleId": "income-type",
+      "fieldName": "income.monthly",
+      "ruleType": "type",
+      "parameters": {
+        "type": "number"
+      },
+      "errorMessage": "Monthly income must be a number"
+    },
+    {
+      "ruleId": "income-positive",
+      "fieldName": "income.monthly",
+      "ruleType": "range",
+      "parameters": {
+        "min": 1
+      },
+      "errorMessage": "Monthly income must be greater than 0"
+    },
+    {
+      "ruleId": "credit-score-required",
+      "fieldName": "credit.score",
+      "ruleType": "required",
+      "errorMessage": "Credit score is required"
+    },
+    {
+      "ruleId": "credit-score-range",
+      "fieldName": "credit.score",
+      "ruleType": "range",
+      "parameters": {
+        "min": 300,
+        "max": 850
+      },
+      "errorMessage": "Credit score must be between 300 and 850"
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceField": "loan.type",
+      "targetField": "property.address",
+      "condition": {
+        "operator": "in",
+        "value": ["conventional", "fha", "va"]
+      },
+      "action": "require"
+    },
+    {
+      "sourceField": "loan.type",
+      "targetField": "property.value",
+      "condition": {
+        "operator": "in",
+        "value": ["conventional", "fha", "va"]
+      },
+      "action": "require"
+    },
+    {
+      "sourceField": "loan.type",
+      "targetField": "loan.purpose",
+      "condition": {
+        "operator": "equals",
+        "value": "refinance"
+      },
+      "action": "require"
+    }
+  ],
+  "customFunctions": [
+    {
+      "name": "calculateDTI",
+      "implementation": "function calculateDTI(monthlyDebt, monthlyIncome) { return (monthlyDebt / monthlyIncome) * 100; }",
+      "language": "javascript"
+    },
+    {
+      "name": "calculateLTV",
+      "implementation": "function calculateLTV(loanAmount, propertyValue) { return (loanAmount / propertyValue) * 100; }",
+      "language": "javascript"
+    }
+  ],
+  "testCases": [
+    {
+      "name": "Valid conventional loan application",
+      "input": {
+        "applicant": {
+          "name": "John Doe",
+          "ssn": "123-45-6789"
+        },
+        "loan": {
+          "type": "conventional",
+          "amount": 250000,
+          "purpose": "purchase"
+        },
+        "property": {
+          "value": 350000,
+          "address": "123 Main St, Anytown, USA"
+        },
+        "income": {
+          "monthly": 5000
+        },
+        "credit": {
+          "score": 720
+        }
+      },
+      "expectedResult": true,
+      "expectedErrors": []
+    },
+    {
+      "name": "Missing required SSN",
+      "input": {
+        "applicant": {
+          "name": "John Doe"
+        },
+        "loan": {
+          "type": "conventional",
+          "amount": 250000
+        },
+        "property": {
+          "value": 350000
+        },
+        "income": {
+          "monthly": 5000
+        },
+        "credit": {
+          "score": 720
+        }
+      },
+      "expectedResult": false,
+      "expectedErrors": ["Applicant SSN is required"]
+    },
+    {
+      "name": "Invalid credit score",
+      "input": {
+        "applicant": {
+          "name": "John Doe",
+          "ssn": "123-45-6789"
+        },
+        "loan": {
+          "type": "conventional",
+          "amount": 250000
+        },
+        "property": {
+          "value": 350000
+        },
+        "income": {
+          "monthly": 5000
+        },
+        "credit": {
+          "score": 200
+        }
+      },
+      "expectedResult": false,
+      "expectedErrors": ["Credit score must be between 300 and 850"]
+    }
+  ],
+  "metadata": {
+    "author": "Financial Domain Expert",
+    "createdDate": "2023-01-01T00:00:00Z",
+    "lastModifiedDate": "2023-01-01T00:00:00Z",
+    "tags": [
+      "loan",
+      "validation",
+      "financial",
+      "mortgage"
+    ]
+  }
+}

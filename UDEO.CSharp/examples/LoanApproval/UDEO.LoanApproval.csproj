@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>UDEO.LoanApproval</RootNamespace>
+    <AssemblyName>UDEO.LoanApproval</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UDEO.Core\UDEO.Core.csproj" />
+    <ProjectReference Include="..\..\src\UDEO.Experts\UDEO.Experts.csproj" />
+    <ProjectReference Include="..\..\src\UDEO.Pipeline\UDEO.Pipeline.csproj" />
+    <ProjectReference Include="..\..\src\UDEO.Store\UDEO.Store.csproj" />
+  </ItemGroup>
+</Project>

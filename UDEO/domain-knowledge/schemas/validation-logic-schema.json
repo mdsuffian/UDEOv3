@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Validation Logic Schema",
+  "description": "Schema for domain-specific validation logic",
+  "type": "object",
+  "properties": {
+    "validationId": {
+      "type": "string",
+      "description": "Unique identifier for the validation logic",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the validation logic"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what this validation does"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Domain this validation belongs to",
+      "enum": ["financial", "medical", "programming"]
+    },
+    "targetType": {
+      "type": "string",
+      "description": "Type of data this validation applies to"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the validation logic",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "severity": {
+      "type": "string",
+      "description": "Severity level when validation fails",
+      "enum": ["info", "warning", "error", "critical"],
+      "default": "error"
+    },
+    "validationRules": {
+      "type": "array",
+      "description": "Array of validation rules",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ruleId": {
+            "type": "string",
+            "description": "Identifier for this specific rule"
+          },
+          "fieldName": {
+            "type": "string",
+            "description": "Name of the field to validate"
+          },
+          "ruleType": {
+            "type": "string",
+            "enum": ["required", "type", "range", "pattern", "custom", "reference"],
+            "description": "Type of validation rule"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Parameters specific to the rule type",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Expected data type (for type rule)"
+              },
+              "min": {
+                "type": "number",
+                "description": "Minimum value (for range rule)"
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum value (for range rule)"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Regular expression pattern (for pattern rule)"
+              },
+              "customFunction": {
+                "type": "string",
+                "description": "Custom validation function name (for custom rule)"
+              },
+              "referenceField": {
+                "type": "string",
+                "description": "Reference field name (for reference rule)"
+              },
+              "referenceTable": {
+                "type": "string",
+                "description": "Reference table name (for reference rule)"
+              }
+            }
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Error message to display when validation fails"
+          }
+        },
+        "required": ["ruleId", "fieldName", "ruleType", "errorMessage"]
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Dependencies between fields",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceField": {
+            "type": "string",
+            "description": "Source field"
+          },
+          "targetField": {
+            "type": "string",
+            "description": "Target field that depends on source"
+          },
+          "condition": {
+            "type": "object",
+            "description": "Condition for dependency",
+            "properties": {
+              "operator": {
+                "type": "string",
+                "enum": ["equals", "not_equals", "greater_than", "less_than", "contains"]
+              },
+              "value": {
+                "description": "Value to compare against"
+              }
+            }
+          },
+          "action": {
+            "type": "string",
+            "enum": ["require", "optional", "validate"],
+            "description": "Action to take when condition is met"
+          }
+        },
+        "required": ["sourceField", "targetField", "condition", "action"]
+      }
+    },
+    "customFunctions": {
+      "type": "array",
+      "description": "Custom validation functions used by this validation logic",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Function name"
+          },
+          "implementation": {
+            "type": "string",
+            "description": "Function implementation (language-specific)"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["csharp", "powershell", "python", "javascript"],
+            "description": "Implementation language"
+          }
+        },
+        "required": ["name", "implementation", "language"]
+      }
+    },
+    "testCases": {
+      "type": "array",
+      "description": "Test cases for this validation logic",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Test case name"
+          },
+          "input": {
+            "type": "object",
+            "description": "Input data for test case"
+          },
+          "expectedResult": {
+            "type": "boolean",
+            "description": "Expected result (true for pass, false for fail)"
+          },
+          "expectedErrors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Expected error messages"
+          }
+        },
+        "required": ["name", "input", "expectedResult"]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "author": {
+          "type": "string",
+          "description": "Author of the validation logic"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the validation logic was created"
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the validation logic was last modified"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags for categorization",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": ["validationId", "name", "description", "domain", "targetType", "version", "validationRules"],
+  "additionalProperties": false
+}

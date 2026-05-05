@@ -1,0 +1,179 @@
+{
+  "rules": [
+    {
+      "ruleId": "dti-maximum",
+      "name": "Maximum Debt-to-Income Ratio",
+      "description": "Maximum allowable debt-to-income ratio for loan approval",
+      "domain": "financial",
+      "category": "lending",
+      "version": "1.2.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "high",
+      "conditions": [
+        {
+          "field": "loanType",
+          "operator": "in",
+          "value": ["conventional", "fha", "va"]
+        }
+      ],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "range",
+            "field": "dtiRatio",
+            "max": 43,
+            "errorMessage": "DTI ratio exceeds maximum allowable limit of 43%"
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "regulation",
+          "title": "Consumer Financial Protection Bureau - Ability-to-Repay and Qualified Mortgage Standards",
+          "location": "https://www.consumerfinance.gov/rules-policy/final-rules/ability-to-repay-and-qualified-mortgage-standards/"
+        }
+      ],
+      "tags": ["dti", "debt-to-income", "lending", "compliance"]
+    },
+    {
+      "ruleId": "ltv-maximum",
+      "name": "Maximum Loan-to-Value Ratio",
+      "description": "Maximum allowable loan-to-value ratio for different loan types",
+      "domain": "financial",
+      "category": "lending",
+      "version": "1.1.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "high",
+      "conditions": [
+        {
+          "field": "loanType",
+          "operator": "equals",
+          "value": "conventional"
+        }
+      ],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "conditional",
+            "conditions": [
+              {
+                "if": {
+                  "field": "occupancy",
+                  "operator": "equals",
+                  "value": "primary"
+                },
+                "then": {
+                  "validationType": "range",
+                  "field": "ltvRatio",
+                  "max": 97
+                }
+              },
+              {
+                "if": {
+                  "field": "occupancy",
+                  "operator": "equals",
+                  "value": "second_home"
+                },
+                "then": {
+                  "validationType": "range",
+                  "field": "ltvRatio",
+                  "max": 90
+                }
+              },
+              {
+                "if": {
+                  "field": "occupancy",
+                  "operator": "equals",
+                  "value": "investment"
+                },
+                "then": {
+                  "validationType": "range",
+                  "field": "ltvRatio",
+                  "max": 85
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "standard",
+          "title": "Fannie Mae Selling Guide",
+          "location": "https://selling-guide.fanniemae.com/"
+        }
+      ],
+      "tags": ["ltv", "loan-to-value", "lending", "conventional"]
+    },
+    {
+      "ruleId": "credit-score-minimum",
+      "name": "Minimum Credit Score Requirement",
+      "description": "Minimum credit score required for different loan types",
+      "domain": "financial",
+      "category": "lending",
+      "version": "1.3.0",
+      "effectiveDate": "2023-01-01",
+      "expiryDate": null,
+      "priority": "high",
+      "conditions": [],
+      "actions": [
+        {
+          "type": "validate",
+          "parameters": {
+            "validationType": "conditional",
+            "conditions": [
+              {
+                "if": {
+                  "field": "loanType",
+                  "operator": "equals",
+                  "value": "conventional"
+                },
+                "then": {
+                  "validationType": "range",
+                  "field": "creditScore",
+                  "min": 620
+                }
+              },
+              {
+                "if": {
+                  "field": "loanType",
+                  "operator": "equals",
+                  "value": "fha"
+                },
+                "then": {
+                  "validationType": "range",
+                  "field": "creditScore",
+                  "min": 580
+                }
+              },
+              {
+                "if": {
+                  "field": "loanType",
+                  "operator": "equals",
+                  "value": "va"
+                },
+                "then": {
+                  "validationType": "range",
+                  "field": "creditScore",
+                  "min": 580
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "references": [
+        {
+          "type": "regulation",
+          "title": "HUD FHA Single Family Housing Policy Handbook",
+          "location": "https://www.hud.gov/program_offices/administration/hudclips/handbooks/hsgh"
+        }
+      ],
+      "tags": ["credit-score", "lending", "minimum", "fha", "va", "conventional"]
+    }
+  ]
+}

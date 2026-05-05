@@ -1,0 +1,22 @@
+{
+  "version": "3.0.0",
+  "major": 3,
+  "minor": 0,
+  "patch": 0,
+  "prerelease": null,
+  "build": null,
+  "metadata": {
+    "framework": "UDEO",
+    "name": "Universal Deterministic Expert Orchestrator",
+    "description": "A zero-dependency, pluggable, pure-PowerShell deterministic expert pipeline framework",
+    "authors": "UDEO Framework Team",
+    "copyright": "Copyright UDEO",
+    "releaseDate": "2026-05-04",
+    "changelog": "Complete v3.0 rewrite: pure PowerShell, zero dependencies, pluggable plugin system, working pipeline engine"
+  },
+  "components": {
+    "powershell": {
+      "version": "3.0.0"
+    }
+  }
+}

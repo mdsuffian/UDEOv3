@@ -1,0 +1,106 @@
+{
+  "validationId": "example-validation-001",
+  "name": "Example Validation Logic",
+  "description": "This is a template for creating domain-specific validation logic. Replace this content with your actual validation description.",
+  "domain": "financial",
+  "targetType": "loan-application",
+  "version": "2.0.0",
+  "severity": "error",
+  "validationRules": [
+    {
+      "ruleId": "required-field",
+      "fieldName": "applicantName",
+      "ruleType": "required",
+      "errorMessage": "Applicant name is required"
+    },
+    {
+      "ruleId": "type-validation",
+      "fieldName": "loanAmount",
+      "ruleType": "type",
+      "parameters": {
+        "type": "number"
+      },
+      "errorMessage": "Loan amount must be a number"
+    },
+    {
+      "ruleId": "range-validation",
+      "fieldName": "loanAmount",
+      "ruleType": "range",
+      "parameters": {
+        "min": 1000,
+        "max": 1000000
+      },
+      "errorMessage": "Loan amount must be between $1,000 and $1,000,000"
+    },
+    {
+      "ruleId": "pattern-validation",
+      "fieldName": "emailAddress",
+      "ruleType": "pattern",
+      "parameters": {
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      },
+      "errorMessage": "Invalid email address format"
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceField": "loanType",
+      "targetField": "collateral",
+      "condition": {
+        "operator": "equals",
+        "value": "mortgage"
+      },
+      "action": "require"
+    }
+  ],
+  "customFunctions": [
+    {
+      "name": "validateCreditScore",
+      "implementation": "function validateCreditScore(score) { return score >= 300 && score <= 850; }",
+      "language": "javascript"
+    }
+  ],
+  "testCases": [
+    {
+      "name": "Valid application",
+      "input": {
+        "applicantName": "John Doe",
+        "loanAmount": 250000,
+        "emailAddress": "john.doe@example.com",
+        "loanType": "mortgage",
+        "collateral": "Property address"
+      },
+      "expectedResult": true,
+      "expectedErrors": []
+    },
+    {
+      "name": "Missing required field",
+      "input": {
+        "loanAmount": 250000,
+        "emailAddress": "john.doe@example.com"
+      },
+      "expectedResult": false,
+      "expectedErrors": ["Applicant name is required"]
+    },
+    {
+      "name": "Invalid loan amount",
+      "input": {
+        "applicantName": "John Doe",
+        "loanAmount": 2000,
+        "emailAddress": "john.doe@example.com"
+      },
+      "expectedResult": true,
+      "expectedErrors": []
+    }
+  ],
+  "metadata": {
+    "author": "Domain Expert",
+    "createdDate": "2023-01-01T00:00:00Z",
+    "lastModifiedDate": "2023-01-01T00:00:00Z",
+    "tags": [
+      "example",
+      "template",
+      "validation"
+    ]
+  }
+}
