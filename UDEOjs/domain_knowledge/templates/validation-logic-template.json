@@ -1,0 +1,26 @@
+{
+  "validationId": "example-validation",
+  "name": "Example Validation Logic",
+  "description": "Template for creating new validation logic. Fill in the fields below.",
+  "domain": "financial",
+  "targetType": "application",
+  "version": "1.0.0",
+  "severity": "error",
+  "validationRules": [
+    {
+      "ruleId": "example-required-field",
+      "fieldName": "example.field",
+      "ruleType": "required",
+      "errorMessage": "Example field is required"
+    }
+  ],
+  "dependencies": [],
+  "customFunctions": [],
+  "testCases": [],
+  "metadata": {
+    "author": "",
+    "createdDate": "2026-01-01T00:00:00Z",
+    "lastModifiedDate": "2026-01-01T00:00:00Z",
+    "tags": ["example", "template"]
+  }
+}

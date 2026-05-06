@@ -1,0 +1,26 @@
+{
+  "ruleId": "example-rule",
+  "name": "Example Domain Rule",
+  "description": "Template for creating a new domain rule. Fill in the fields below.",
+  "domain": "financial",
+  "category": "example",
+  "version": "1.0.0",
+  "effectiveDate": "2026-01-01",
+  "expiryDate": null,
+  "priority": "medium",
+  "conditions": [
+    {
+      "field": "exampleField",
+      "operator": "equals",
+      "value": "exampleValue"
+    }
+  ],
+  "actions": [
+    {
+      "type": "validate",
+      "parameters": {}
+    }
+  ],
+  "references": [],
+  "tags": ["example", "template"]
+}

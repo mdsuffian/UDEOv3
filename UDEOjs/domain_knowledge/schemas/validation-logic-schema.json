@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Validation Logic Schema",
+  "description": "Schema for domain-specific validation logic",
+  "type": "object",
+  "properties": {
+    "validationId": {
+      "type": "string",
+      "description": "Unique identifier for the validation logic",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "name": { "type": "string", "description": "Human-readable name of the validation logic" },
+    "description": { "type": "string", "description": "Detailed description of what this validation does" },
+    "domain": { "type": "string", "description": "Domain this validation belongs to", "enum": ["financial", "medical", "programming"] },
+    "targetType": { "type": "string", "description": "Type of data this validation applies to" },
+    "version": { "type": "string", "description": "Version of the validation logic", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "severity": { "type": "string", "description": "Severity level when validation fails", "enum": ["info", "warning", "error", "critical"], "default": "error" },
+    "validationRules": {
+      "type": "array",
+      "description": "Array of validation rules",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ruleId": { "type": "string", "description": "Identifier for this specific rule" },
+          "fieldName": { "type": "string", "description": "Name of the field to validate" },
+          "ruleType": { "type": "string", "enum": ["required", "type", "range", "pattern", "custom", "reference"], "description": "Type of validation rule" },
+          "parameters": {
+            "type": "object",
+            "description": "Parameters specific to the rule type",
+            "properties": {
+              "type": { "type": "string" },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "pattern": { "type": "string" },
+              "customFunction": { "type": "string" },
+              "referenceField": { "type": "string" },
+              "referenceTable": { "type": "string" }
+            }
+          },
+          "errorMessage": { "type": "string", "description": "Error message when validation fails" }
+        },
+        "required": ["ruleId", "fieldName", "ruleType", "errorMessage"]
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Dependencies between fields",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceField": { "type": "string" },
+          "targetField": { "type": "string" },
+          "condition": {
+            "type": "object",
+            "properties": {
+              "operator": { "type": "string", "enum": ["equals", "not_equals", "greater_than", "less_than", "contains"] },
+              "value": {}
+            }
+          },
+          "action": { "type": "string", "enum": ["require", "optional", "validate"] }
+        },
+        "required": ["sourceField", "targetField", "condition", "action"]
+      }
+    },
+    "customFunctions": {
+      "type": "array",
+      "description": "Custom validation functions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "implementation": { "type": "string" },
+          "language": { "type": "string", "enum": ["csharp", "powershell", "python", "javascript"] }
+        },
+        "required": ["name", "implementation", "language"]
+      }
+    },
+    "testCases": {
+      "type": "array",
+      "description": "Test cases for this validation logic",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "input": { "type": "object" },
+          "expectedResult": { "type": "boolean" },
+          "expectedErrors": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["name", "input", "expectedResult"]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "author": { "type": "string" },
+        "createdDate": { "type": "string", "format": "date-time" },
+        "lastModifiedDate": { "type": "string", "format": "date-time" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "required": ["validationId", "name", "description", "domain", "targetType", "version", "validationRules"],
+  "additionalProperties": false
+}

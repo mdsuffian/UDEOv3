@@ -1,0 +1,36 @@
+{
+  "name": "udeo",
+  "version": "4.0.0",
+  "description": "Universal Deterministic Expert Orchestrator — a zero-dependency, pluggable expert pipeline framework",
+  "main": "index.js",
+  "bin": {
+    "udeo": "./cli.js"
+  },
+  "keywords": [
+    "pipeline",
+    "decision-engine",
+    "expert-system",
+    "rules-engine",
+    "compliance",
+    "audit",
+    "deterministic",
+    "traceable",
+    "workflow"
+  ],
+  "license": "MIT",
+  "author": "UDEO Framework Team",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "index.js",
+    "engine.js",
+    "experts.js",
+    "pipeline.js",
+    "store.js",
+    "telemetry.js",
+    "cli.js",
+    "plugins/",
+    "domain_knowledge/"
+  ]
+}

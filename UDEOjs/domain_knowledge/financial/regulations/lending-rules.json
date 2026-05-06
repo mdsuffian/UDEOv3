@@ -1,0 +1,202 @@
+{
+    "rules":  [
+                  {
+                      "references":  [
+                                         {
+                                             "title":  "CFPB Ability-to-Repay and Qualified Mortgage Standards",
+                                             "location":  "https://www.consumerfinance.gov/rules-policy/final-rules/ability-to-repay-and-qualified-mortgage-standards/",
+                                             "type":  "regulation"
+                                         }
+                                     ],
+                      "version":  "1.2.0",
+                      "category":  "lending",
+                      "expiryDate":  null,
+                      "actions":  [
+                                      {
+                                          "type":  "validate",
+                                          "parameters":  {
+                                                             "field":  "dtiRatio",
+                                                             "errorMessage":  "DTI ratio exceeds maximum allowable limit of 43%",
+                                                             "validationType":  "range",
+                                                             "max":  43
+                                                         }
+                                      }
+                                  ],
+                      "tags":  [
+                                   "dti",
+                                   "debt-to-income",
+                                   "lending",
+                                   "compliance"
+                               ],
+                      "name":  "Maximum Debt-to-Income Ratio",
+                      "description":  "Maximum allowable debt-to-income ratio for loan approval",
+                      "ruleId":  "dti-maximum",
+                      "priority":  "high",
+                      "effectiveDate":  "2023-01-01",
+                      "domain":  "financial",
+                      "conditions":  [
+                                         {
+                                             "field":  "loanType",
+                                             "operator":  "in",
+                                             "value":  [
+                                                           "conventional",
+                                                           "fha",
+                                                           "va"
+                                                       ]
+                                         }
+                                     ]
+                  },
+                  {
+                      "references":  [
+                                         {
+                                             "title":  "Fannie Mae Selling Guide",
+                                             "location":  "https://selling-guide.fanniemae.com/",
+                                             "type":  "standard"
+                                         }
+                                     ],
+                      "version":  "1.1.0",
+                      "category":  "lending",
+                      "expiryDate":  null,
+                      "actions":  [
+                                      {
+                                          "type":  "validate",
+                                          "parameters":  {
+                                                             "conditions":  [
+                                                                                {
+                                                                                    "then":  {
+                                                                                                 "field":  "ltvRatio",
+                                                                                                 "validationType":  "range",
+                                                                                                 "max":  97
+                                                                                             },
+                                                                                    "if":  {
+                                                                                               "field":  "occupancy",
+                                                                                               "operator":  "equals",
+                                                                                               "value":  "primary"
+                                                                                           }
+                                                                                },
+                                                                                {
+                                                                                    "then":  {
+                                                                                                 "field":  "ltvRatio",
+                                                                                                 "validationType":  "range",
+                                                                                                 "max":  90
+                                                                                             },
+                                                                                    "if":  {
+                                                                                               "field":  "occupancy",
+                                                                                               "operator":  "equals",
+                                                                                               "value":  "second_home"
+                                                                                           }
+                                                                                },
+                                                                                {
+                                                                                    "then":  {
+                                                                                                 "field":  "ltvRatio",
+                                                                                                 "validationType":  "range",
+                                                                                                 "max":  85
+                                                                                             },
+                                                                                    "if":  {
+                                                                                               "field":  "occupancy",
+                                                                                               "operator":  "equals",
+                                                                                               "value":  "investment"
+                                                                                           }
+                                                                                }
+                                                                            ],
+                                                             "validationType":  "conditional"
+                                                         }
+                                      }
+                                  ],
+                      "tags":  [
+                                   "ltv",
+                                   "loan-to-value",
+                                   "lending",
+                                   "conventional"
+                               ],
+                      "name":  "Maximum Loan-to-Value Ratio",
+                      "description":  "Maximum allowable loan-to-value ratio for different loan types",
+                      "ruleId":  "ltv-maximum",
+                      "priority":  "high",
+                      "effectiveDate":  "2023-01-01",
+                      "domain":  "financial",
+                      "conditions":  [
+                                         {
+                                             "field":  "loanType",
+                                             "operator":  "equals",
+                                             "value":  "conventional"
+                                         }
+                                     ]
+                  },
+                  {
+                      "references":  [
+                                         {
+                                             "title":  "HUD FHA Single Family Housing Policy Handbook",
+                                             "location":  "https://www.hud.gov/program_offices/administration/hudclips/handbooks/hsgh",
+                                             "type":  "regulation"
+                                         }
+                                     ],
+                      "version":  "1.3.0",
+                      "category":  "lending",
+                      "expiryDate":  null,
+                      "actions":  [
+                                      {
+                                          "type":  "validate",
+                                          "parameters":  {
+                                                             "conditions":  [
+                                                                                {
+                                                                                    "then":  {
+                                                                                                 "field":  "creditScore",
+                                                                                                 "min":  620,
+                                                                                                 "validationType":  "range"
+                                                                                             },
+                                                                                    "if":  {
+                                                                                               "field":  "loanType",
+                                                                                               "operator":  "equals",
+                                                                                               "value":  "conventional"
+                                                                                           }
+                                                                                },
+                                                                                {
+                                                                                    "then":  {
+                                                                                                 "field":  "creditScore",
+                                                                                                 "min":  580,
+                                                                                                 "validationType":  "range"
+                                                                                             },
+                                                                                    "if":  {
+                                                                                               "field":  "loanType",
+                                                                                               "operator":  "equals",
+                                                                                               "value":  "fha"
+                                                                                           }
+                                                                                },
+                                                                                {
+                                                                                    "then":  {
+                                                                                                 "field":  "creditScore",
+                                                                                                 "min":  580,
+                                                                                                 "validationType":  "range"
+                                                                                             },
+                                                                                    "if":  {
+                                                                                               "field":  "loanType",
+                                                                                               "operator":  "equals",
+                                                                                               "value":  "va"
+                                                                                           }
+                                                                                }
+                                                                            ],
+                                                             "validationType":  "conditional"
+                                                         }
+                                      }
+                                  ],
+                      "tags":  [
+                                   "credit-score",
+                                   "lending",
+                                   "minimum",
+                                   "fha",
+                                   "va",
+                                   "conventional"
+                               ],
+                      "name":  "Minimum Credit Score Requirement",
+                      "description":  "Minimum credit score required for different loan types",
+                      "ruleId":  "credit-score-minimum",
+                      "priority":  "high",
+                      "effectiveDate":  "2023-01-01",
+                      "domain":  "financial",
+                      "conditions":  [
+
+                                     ]
+                  }
+              ]
+}
